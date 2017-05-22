@@ -8,18 +8,38 @@ public class State extends BaseEntity {
 
     private String url;
 
-    private LocalDateTime dateTime;
-
     private Status currentStatus = Status.UNKNOWN;
+
+    private LocalDateTime dateTime;
 
     private String information;
 
-    public State(Integer pageId, String url, Status currentStatus, String information) {
+    public State(Integer pageId, Status currentStatus, String url, String information) {
         this.pageId = pageId;
         this.url = url;
-        this.dateTime = LocalDateTime.now();
         this.currentStatus = currentStatus;
+        this.dateTime = LocalDateTime.now();
         this.information = information;
+    }
+
+    public Integer getPageId() {
+        return pageId;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public Status getCurrentStatus() {
+        return currentStatus;
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public String getInformation() {
+        return information;
     }
 
     @Override
@@ -28,8 +48,8 @@ public class State extends BaseEntity {
                 "id=" + id +
                 ", pageId=" + pageId +
                 ", url='" + url + '\'' +
-                ", dateTime=" + dateTime +
                 ", currentStatus=" + currentStatus +
+                ", dateTime=" + dateTime +
                 ", information='" + information + '\'' +
                 '}';
     }
