@@ -1,30 +1,33 @@
 package com.plynko.model;
 
-import java.net.URL;
+public class Page extends BaseEntity {
 
-public class Page {
-    private Integer id;
+    private String url;
 
-    private URL url;
-
+    // in seconds
     private int monitoringPeriod;
 
+    // in milliseconds
     private int warningTime;
 
+    // in milliseconds
     private int criticalTime;
 
     private int responseCode;
 
+    // in bytes
     private int minResponseSize;
 
+    // in bytes
     private int maxResponseSize;
 
     private String subString;
 
     private boolean active = true;
 
-    public Page(URL url, int monitoringPeriod, int warningTime, int criticalTime, int responseCode,
-                int minResponseSize, int maxResponseSize, String subString) {
+    public Page(Integer id, String url, int monitoringPeriod, int warningTime, int criticalTime,
+                int responseCode, int minResponseSize, int maxResponseSize, String subString) {
+        super(id);
         this.url = url;
         this.monitoringPeriod = monitoringPeriod;
         this.warningTime = warningTime;
@@ -33,5 +36,21 @@ public class Page {
         this.minResponseSize = minResponseSize;
         this.maxResponseSize = maxResponseSize;
         this.subString = subString;
+    }
+
+    @Override
+    public String toString() {
+        return "Page{" +
+                "id=" + id +
+                ", url='" + url + '\'' +
+                ", monitoringPeriod=" + monitoringPeriod + " s" +
+                ", warningTime=" + warningTime + " ms" +
+                ", criticalTime=" + criticalTime + " ms" +
+                ", responseCode=" + responseCode +
+                ", minResponseSize=" + minResponseSize + " byte" +
+                ", maxResponseSize=" + maxResponseSize + " byte" +
+                ", subString='" + subString + '\'' +
+                ", active=" + active +
+                '}';
     }
 }
