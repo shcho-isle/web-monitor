@@ -38,6 +38,42 @@ public class Page extends BaseEntity {
         this.subString = subString;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public int getMonitoringPeriod() {
+        return monitoringPeriod;
+    }
+
+    public int getWarningTime() {
+        return warningTime;
+    }
+
+    public int getCriticalTime() {
+        return criticalTime;
+    }
+
+    public int getResponseCode() {
+        return responseCode;
+    }
+
+    public int getMinResponseSize() {
+        return minResponseSize;
+    }
+
+    public int getMaxResponseSize() {
+        return maxResponseSize;
+    }
+
+    public String getSubString() {
+        return subString;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
     @Override
     public String toString() {
         return "Page{" +

@@ -13,6 +13,10 @@ public class State extends BaseEntity {
     private LocalDateTime dateTime;
 
     private String information;
+    
+    public State(Integer pageId, String url) {
+        this(pageId, Status.UNKNOWN, url, "Unavailable");
+    }
 
     public State(Integer pageId, Status currentStatus, String url, String information) {
         this.pageId = pageId;

@@ -3,16 +3,5 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
 		 http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
-    <display-name>Topjava</display-name>
-
-    <servlet>
-        <servlet-name>stateServlet</servlet-name>
-        <servlet-class>com.plynko.web.StateServlet</servlet-class>
-        <load-on-startup>0</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>stateServlet</servlet-name>
-        <url-pattern>/monitor</url-pattern>
-    </servlet-mapping>
-
+    <display-name>web-monitor</display-name>
 </web-app>

@@ -1,10 +1,9 @@
 package com.plynko.repository;
 
+import com.plynko.model.Page;
 import com.plynko.model.State;
-import com.plynko.util.Utils;
 
-import java.util.Collection;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -12,10 +11,6 @@ public class InMemoryStateRepositoryImpl implements StateRepository {
 
     private final Map<Integer, State> repository = new ConcurrentHashMap<>();
     private final AtomicInteger counter = new AtomicInteger(0);
-
-    {
-        Utils.STATES.forEach(this::save);
-    }
 
     @Override
     public State save(State state) {
@@ -38,6 +33,18 @@ public class InMemoryStateRepositoryImpl implements StateRepository {
 
     @Override
     public Collection<State> getAll() {
+        if (repository.isEmpty()) {
+            populate();
+        }
+
         return repository.values();
+    }
+
+    private void populate() {
+        PageRepository pageRepository = new InMemoryPageRepositoryImpl();
+        List<Page> pages = new ArrayList<>(pageRepository.getAll());
+        for (Page page: pages) {
+            save(new State(page.getId(), page.getUrl()));
+        }
     }
 }
