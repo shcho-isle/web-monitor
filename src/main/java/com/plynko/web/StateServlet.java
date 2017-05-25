@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 
 @WebServlet("/monitor")
 public class StateServlet extends HttpServlet {
@@ -21,6 +22,8 @@ public class StateServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setIntHeader("Refresh", RELOAD_PERIOD);
         request.setAttribute("states", repository.getAll());
+        request.setAttribute("lastUpdated", new Date());
+        request.setAttribute("period", RELOAD_PERIOD);
         request.getRequestDispatcher("/monitor.jsp").forward(request, response);
     }
 }

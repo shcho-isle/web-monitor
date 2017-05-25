@@ -1,7 +1,7 @@
 package com.plynko.model;
 
 import java.net.URL;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 public class State extends BaseEntity {
 
@@ -11,7 +11,7 @@ public class State extends BaseEntity {
 
     private Status currentStatus = Status.UNKNOWN;
 
-    private LocalDateTime dateTime;
+    private Date dateTime;
 
     private String information;
     
@@ -23,7 +23,7 @@ public class State extends BaseEntity {
         this.pageId = pageId;
         this.url = url;
         this.currentStatus = currentStatus;
-        this.dateTime = LocalDateTime.now();
+        this.dateTime = new Date();
         this.information = information;
     }
 
@@ -39,7 +39,7 @@ public class State extends BaseEntity {
         return currentStatus;
     }
 
-    public LocalDateTime getDateTime() {
+    public Date getDateTime() {
         return dateTime;
     }
 

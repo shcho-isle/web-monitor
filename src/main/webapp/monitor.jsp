@@ -4,34 +4,24 @@
 <html>
 <head>
     <title>Monitor</title>
-    <style>
-        .OK {
-            background-color: lightgreen;
-        }
 
-        .WARNING {
-            background-color: yellow;
-        }
-
-        .CRITICAL {
-            background-color: red;
-        }
-
-        .PENDING {
-            background-color: lightgray;
-        }
-
-        .UNKNOWN {
-            background-color: orange;
-        }
-    </style>
+    <link rel="stylesheet" href="resources/css/style.css">
 </head>
-<body>
+<body class="status">
 <section>
     <h2><a href="index.html">Home</a></h2>
-    <h2>Monitor</h2>
-    <table border="1" cellpadding="8" cellspacing="0">
-        <thead>
+
+    <table class="infoBox" border=1 cellpadding=0 cellspacing=0>
+        <tr><td class="infoBox">
+            <div class="infoBoxTitle">Info</div>
+            Last Updated: ${lastUpdated}<br>
+            Updated every ${period} seconds<br>
+            Pavlo Plynko - <a href="https://github.com/shcho-isle" target="_new">GitHub</a><br>
+        </td></tr>
+    </table>
+
+    <table border="0" cellpadding="8" cellspacing="2">
+        <thead class="status">
         <tr>
             <th>URL</th>
             <th>Status</th>
@@ -44,7 +34,7 @@
             <tr class="${state.currentStatus.toString()}">
                 <td>${state.url}</td>
                 <td>${state.currentStatus}</td>
-                <td>${state.dateTime}</td>
+                <td><fmt:formatDate value="${state.dateTime}" pattern="MM-dd-yyyy hh:mm:ss"/></td>
                 <td>${state.information}</td>
             </tr>
         </c:forEach>

@@ -17,7 +17,7 @@ public class AppContextListener implements ServletContextListener {
 
     private PageRepository repository = InMemoryPageRepositoryImpl.getInstance();
 
-    ScheduledExecutorService scheduler;
+    private ScheduledExecutorService scheduler;
 
     @Override
     public void contextInitialized(ServletContextEvent arg0) {
@@ -25,7 +25,7 @@ public class AppContextListener implements ServletContextListener {
         Collection<Page> pages = repository.getAllCurrent();
 
         for (Page page: pages) {
-            scheduler.scheduleWithFixedDelay(new UrlMonitor(page.getId()), 0, page.getMonitoringPeriod(), TimeUnit.SECONDS);
+            scheduler.scheduleWithFixedDelay(new PageMonitor(page.getId()), 0, page.getMonitoringPeriod(), TimeUnit.SECONDS);
         }
 
     }

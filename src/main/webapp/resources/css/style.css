@@ -1,0 +1,48 @@
+.status {
+    font-family: arial, serif;
+    background-color: white;
+    color: black;
+}
+
+.infoBox {
+    font-size: 8pt;
+    background-color: #C4C2C2;
+    padding: 2;
+}
+
+.infoBoxTitle {
+    font-size: 10pt;
+    font-weight: bold;
+}
+
+thead.status {
+    font-size: 10pt;
+    text-align: left;
+    background-color: #999797;
+    color: #DCE5C1;
+}
+
+.OK {
+    font-size: 8pt;
+    background-color: #33FF00;
+}
+
+.WARNING {
+    font-size: 8pt;
+    background-color: #FFFF00;
+}
+
+.CRITICAL {
+    font-size: 8pt;
+    background-color: #F83838;
+}
+
+.PENDING {
+    font-size: 8pt;
+    background-color: #ACACAC;
+}
+
+.UNKNOWN {
+    font-size: 8pt;
+    background-color: #FF9900;
+}

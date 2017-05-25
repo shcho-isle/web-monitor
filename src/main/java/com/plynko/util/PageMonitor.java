@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class UrlMonitor implements Runnable {
+public class PageMonitor implements Runnable {
 
     private List<String> oks = new ArrayList<>();
     private List<String> warnings = new ArrayList<>();
@@ -25,7 +25,7 @@ public class UrlMonitor implements Runnable {
 
     private Integer pageId;
 
-    public UrlMonitor(Integer pageId) {
+    public PageMonitor(Integer pageId) {
         this.pageId = pageId;
     }
 
@@ -41,10 +41,10 @@ public class UrlMonitor implements Runnable {
                 long responseTime = (System.nanoTime() - startTime) / 1_000_000;
                 analyzeResponseTime(responseTime, page.getWarningTime(), page.getCriticalTime());
             } catch (IOException e) {
-                unknown.add("Monitoring failed.");
+                unknown.add("monitoring failed");
             }
         } else {
-            pending.add("Was excluded from monitoring.");
+            pending.add("was excluded from monitoring");
         }
 
         saveState(page.getUrl());
@@ -83,7 +83,7 @@ public class UrlMonitor implements Runnable {
             status = Status.OK;
         }
 
-        String information = actualInformation.stream().collect(Collectors.joining("; ", "", "."));
+        String information = actualInformation.stream().collect(Collectors.joining("; "));
 
         StateRepository stateRepository = InMemoryStateRepositoryImpl.getInstance();
         stateRepository.save(new State(pageId, url, status, information));
@@ -93,5 +93,7 @@ public class UrlMonitor implements Runnable {
         oks.clear();
         warnings.clear();
         criticals.clear();
+        unknown.clear();
+        pending.clear();
     }
 }
