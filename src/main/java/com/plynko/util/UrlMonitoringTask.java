@@ -1,11 +1,11 @@
 package com.plynko.util;
 
-import com.plynko.model.Page;
+import com.plynko.model.UrlConfig;
 import com.plynko.model.State;
 import com.plynko.model.Status;
-import com.plynko.repository.InMemoryPageRepositoryImpl;
+import com.plynko.repository.InMemoryConfigRepositoryImpl;
 import com.plynko.repository.InMemoryStateRepositoryImpl;
-import com.plynko.repository.PageRepository;
+import com.plynko.repository.ConfigRepository;
 import com.plynko.repository.StateRepository;
 
 import java.io.IOException;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class PageMonitor implements Runnable {
+public class UrlMonitoringTask implements Runnable {
 
     private List<String> oks = new ArrayList<>();
     private List<String> warnings = new ArrayList<>();
@@ -23,23 +23,23 @@ public class PageMonitor implements Runnable {
     private List<String> unknown = new ArrayList<>();
     private List<String> pending = new ArrayList<>();
 
-    private Integer pageId;
+    private Integer id;
 
-    public PageMonitor(Integer pageId) {
-        this.pageId = pageId;
+    public UrlMonitoringTask(Integer id) {
+        this.id = id;
     }
 
     @Override
     public void run() {
-        PageRepository pageRepository = InMemoryPageRepositoryImpl.getInstance();
-        Page page = pageRepository.get(pageId);
+        ConfigRepository configRepository = InMemoryConfigRepositoryImpl.getInstance();
+        UrlConfig urlConfig = configRepository.get(id);
 
-        if (page.isActive()) {
+        if (urlConfig.isActive()) {
             try {
                 long startTime = System.nanoTime();
-                String content = new Scanner(page.getUrl().openStream(), "UTF-8").useDelimiter("\\A").next();
+                String content = new Scanner(urlConfig.getUrl().openStream(), "UTF-8").useDelimiter("\\A").next();
                 long responseTime = (System.nanoTime() - startTime) / 1_000_000;
-                analyzeResponseTime(responseTime, page.getWarningTime(), page.getCriticalTime());
+                analyzeResponseTime(responseTime, urlConfig.getWarningTime(), urlConfig.getCriticalTime());
             } catch (IOException e) {
                 unknown.add("monitoring failed");
             }
@@ -47,7 +47,7 @@ public class PageMonitor implements Runnable {
             pending.add("was excluded from monitoring");
         }
 
-        saveState(page.getUrl());
+        saveState(urlConfig.getUrl());
         cleanInformation();
     }
 
@@ -86,7 +86,7 @@ public class PageMonitor implements Runnable {
         String information = actualInformation.stream().collect(Collectors.joining("; "));
 
         StateRepository stateRepository = InMemoryStateRepositoryImpl.getInstance();
-        stateRepository.save(new State(pageId, url, status, information));
+        stateRepository.save(new State(id, url.toString(), status, information));
     }
 
     private void cleanInformation() {

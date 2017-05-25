@@ -1,6 +1,6 @@
 package com.plynko.repository;
 
-import com.plynko.model.Page;
+import com.plynko.model.UrlConfig;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,26 +17,26 @@ import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class InMemoryPageRepositoryImpl implements PageRepository {
+public class InMemoryConfigRepositoryImpl implements ConfigRepository {
 
-    private static final InMemoryPageRepositoryImpl instance = new InMemoryPageRepositoryImpl();
+    private static final InMemoryConfigRepositoryImpl instance = new InMemoryConfigRepositoryImpl();
 
-    private final Map<Integer, Page> repository = new ConcurrentHashMap<>();
+    private final Map<Integer, UrlConfig> repository = new ConcurrentHashMap<>();
     private final AtomicInteger counter = new AtomicInteger(0);
 
-    private InMemoryPageRepositoryImpl(){}
+    private InMemoryConfigRepositoryImpl(){}
 
-    public static InMemoryPageRepositoryImpl getInstance() {
+    public static InMemoryConfigRepositoryImpl getInstance() {
         return instance;
     }
 
     @Override
-    public Page save(Page page) {
-        if (page.isNew()) {
-            page.setId(counter.incrementAndGet());
+    public UrlConfig save(UrlConfig urlConfig) {
+        if (urlConfig.isNew()) {
+            urlConfig.setId(counter.incrementAndGet());
         }
-        repository.put(page.getId(), page);
-        return page;
+        repository.put(urlConfig.getId(), urlConfig);
+        return urlConfig;
     }
 
     @Override
@@ -45,12 +45,12 @@ public class InMemoryPageRepositoryImpl implements PageRepository {
     }
 
     @Override
-    public Page get(int id) {
+    public UrlConfig get(int id) {
         return repository.get(id);
     }
 
     @Override
-    public Collection<Page> getAllCurrent() {
+    public Collection<UrlConfig> getAllCurrent() {
         if (repository.isEmpty()) {
             populateStates();
         }
@@ -94,8 +94,8 @@ public class InMemoryPageRepositoryImpl implements PageRepository {
             int maxResponseSize = Integer.parseInt(properties.getProperty("response.size.max"));
             String subString = properties.getProperty("response.substring");
 
-            Page page = new Page(null, url, monitoringPeriod, warningTime, criticalTime, responseCode, minResponseSize, maxResponseSize, subString);
-            save(page);
+            UrlConfig urlConfig = new UrlConfig(null, url, monitoringPeriod, warningTime, criticalTime, responseCode, minResponseSize, maxResponseSize, subString);
+            save(urlConfig);
         } catch (MalformedURLException | NumberFormatException e) {
             return;
         }

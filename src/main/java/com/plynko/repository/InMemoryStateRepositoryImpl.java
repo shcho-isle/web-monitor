@@ -1,6 +1,6 @@
 package com.plynko.repository;
 
-import com.plynko.model.Page;
+import com.plynko.model.UrlConfig;
 import com.plynko.model.State;
 
 import java.util.*;
@@ -25,13 +25,13 @@ public class InMemoryStateRepositoryImpl implements StateRepository {
         if (state.isNew()) {
             state.setId(counter.incrementAndGet());
         }
-        repository.put(state.getPageId(), state);
+        repository.put(state.getConfigId(), state);
         return state;
     }
 
     @Override
-    public State get(int pageId) {
-        return repository.get(pageId);
+    public State get(int configId) {
+        return repository.get(configId);
     }
 
     @Override
@@ -44,10 +44,10 @@ public class InMemoryStateRepositoryImpl implements StateRepository {
     }
 
     private void populate() {
-        PageRepository pageRepository = InMemoryPageRepositoryImpl.getInstance();
-        List<Page> pages = new ArrayList<>(pageRepository.getAllCurrent());
-        for (Page page: pages) {
-            save(new State(page.getId(), page.getUrl()));
+        ConfigRepository configRepository = InMemoryConfigRepositoryImpl.getInstance();
+        List<UrlConfig> configs = new ArrayList<>(configRepository.getAllCurrent());
+        for (UrlConfig urlConfig : configs) {
+            save(new State(urlConfig.getId(), urlConfig.getUrl().toString()));
         }
     }
 }

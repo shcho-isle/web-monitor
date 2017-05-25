@@ -8,7 +8,7 @@ public interface StateRepository {
     State save(State state);
 
     // null if not found
-    State get(int pageId);
+    State get(int configId);
 
     Collection<State> getAll();
 }

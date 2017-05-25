@@ -2,7 +2,7 @@ package com.plynko.model;
 
 import java.net.URL;
 
-public class Page extends BaseEntity {
+public class UrlConfig extends BaseEntity {
 
     private URL url;
 
@@ -27,8 +27,8 @@ public class Page extends BaseEntity {
 
     private boolean active = true;
 
-    public Page(Integer id, URL url, int monitoringPeriod, long warningTime, long criticalTime,
-                int responseCode, int minResponseSize, int maxResponseSize, String subString) {
+    public UrlConfig(Integer id, URL url, int monitoringPeriod, long warningTime, long criticalTime,
+                     int responseCode, int minResponseSize, int maxResponseSize, String subString) {
         super(id);
         this.url = url;
         this.monitoringPeriod = monitoringPeriod;
@@ -78,7 +78,7 @@ public class Page extends BaseEntity {
 
     @Override
     public String toString() {
-        return "Page{" +
+        return "UrlConfig{" +
                 "id=" + id +
                 ", url='" + url + '\'' +
                 ", monitoringPeriod=" + monitoringPeriod + " s" +

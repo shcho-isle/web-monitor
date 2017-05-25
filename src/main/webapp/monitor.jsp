@@ -32,7 +32,7 @@
         <c:forEach items="${states}" var="state">
             <jsp:useBean id="state" scope="page" type="com.plynko.model.State"/>
             <tr class="${state.currentStatus.toString()}">
-                <td>${state.url}</td>
+                <td>${state.name}</td>
                 <td>${state.currentStatus}</td>
                 <td><fmt:formatDate value="${state.dateTime}" pattern="MM-dd-yyyy hh:mm:ss"/></td>
                 <td>${state.information}</td>
