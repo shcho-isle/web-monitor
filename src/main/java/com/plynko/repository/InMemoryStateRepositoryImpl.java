@@ -9,26 +9,29 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class InMemoryStateRepositoryImpl implements StateRepository {
 
+    private static final InMemoryStateRepositoryImpl instance = new InMemoryStateRepositoryImpl();
+
     private final Map<Integer, State> repository = new ConcurrentHashMap<>();
     private final AtomicInteger counter = new AtomicInteger(0);
+
+    private InMemoryStateRepositoryImpl(){}
+
+    public static InMemoryStateRepositoryImpl getInstance() {
+        return instance;
+    }
 
     @Override
     public State save(State state) {
         if (state.isNew()) {
             state.setId(counter.incrementAndGet());
         }
-        repository.put(state.getId(), state);
+        repository.put(state.getPageId(), state);
         return state;
     }
 
     @Override
-    public boolean delete(int id) {
-        return repository.remove(id) != null;
-    }
-
-    @Override
-    public State get(int id) {
-        return repository.get(id);
+    public State get(int pageId) {
+        return repository.get(pageId);
     }
 
     @Override
@@ -41,8 +44,8 @@ public class InMemoryStateRepositoryImpl implements StateRepository {
     }
 
     private void populate() {
-        PageRepository pageRepository = new InMemoryPageRepositoryImpl();
-        List<Page> pages = new ArrayList<>(pageRepository.getAll());
+        PageRepository pageRepository = InMemoryPageRepositoryImpl.getInstance();
+        List<Page> pages = new ArrayList<>(pageRepository.getAllCurrent());
         for (Page page: pages) {
             save(new State(page.getId(), page.getUrl()));
         }

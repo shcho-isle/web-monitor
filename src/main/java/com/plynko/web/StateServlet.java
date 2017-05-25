@@ -3,7 +3,6 @@ package com.plynko.web;
 import com.plynko.repository.InMemoryStateRepositoryImpl;
 import com.plynko.repository.StateRepository;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,15 +13,9 @@ import java.io.IOException;
 @WebServlet("/monitor")
 public class StateServlet extends HttpServlet {
 
-    private StateRepository repository;
+    private StateRepository repository = InMemoryStateRepositoryImpl.getInstance();
 
-    private static final int RELOAD_PERIOD = 10;
-
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-        repository = new InMemoryStateRepositoryImpl();
-    }
+    private static final int RELOAD_PERIOD = 5;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

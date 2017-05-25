@@ -1,12 +1,13 @@
 package com.plynko.model;
 
+import java.net.URL;
 import java.time.LocalDateTime;
 
 public class State extends BaseEntity {
 
     private Integer pageId;
 
-    private String url;
+    private URL url;
 
     private Status currentStatus = Status.UNKNOWN;
 
@@ -14,11 +15,11 @@ public class State extends BaseEntity {
 
     private String information;
     
-    public State(Integer pageId, String url) {
-        this(pageId, Status.UNKNOWN, url, "Unavailable");
+    public State(Integer pageId, URL url) {
+        this(pageId, url, Status.UNKNOWN, "Unavailable");
     }
 
-    public State(Integer pageId, Status currentStatus, String url, String information) {
+    public State(Integer pageId, URL url, Status currentStatus, String information) {
         this.pageId = pageId;
         this.url = url;
         this.currentStatus = currentStatus;
@@ -30,7 +31,7 @@ public class State extends BaseEntity {
         return pageId;
     }
 
-    public String getUrl() {
+    public URL getUrl() {
         return url;
     }
 

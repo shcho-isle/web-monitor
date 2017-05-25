@@ -13,5 +13,5 @@ public interface PageRepository {
     // null if not found
     Page get(int id);
 
-    Collection<Page> getAll();
+    Collection<Page> getAllCurrent();
 }

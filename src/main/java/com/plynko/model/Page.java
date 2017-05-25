@@ -1,17 +1,19 @@
 package com.plynko.model;
 
+import java.net.URL;
+
 public class Page extends BaseEntity {
 
-    private String url;
+    private URL url;
 
     // in seconds
     private int monitoringPeriod;
 
     // in milliseconds
-    private int warningTime;
+    private long warningTime;
 
     // in milliseconds
-    private int criticalTime;
+    private long criticalTime;
 
     private int responseCode;
 
@@ -25,7 +27,7 @@ public class Page extends BaseEntity {
 
     private boolean active = true;
 
-    public Page(Integer id, String url, int monitoringPeriod, int warningTime, int criticalTime,
+    public Page(Integer id, URL url, int monitoringPeriod, long warningTime, long criticalTime,
                 int responseCode, int minResponseSize, int maxResponseSize, String subString) {
         super(id);
         this.url = url;
@@ -38,7 +40,7 @@ public class Page extends BaseEntity {
         this.subString = subString;
     }
 
-    public String getUrl() {
+    public URL getUrl() {
         return url;
     }
 
@@ -46,11 +48,11 @@ public class Page extends BaseEntity {
         return monitoringPeriod;
     }
 
-    public int getWarningTime() {
+    public long getWarningTime() {
         return warningTime;
     }
 
-    public int getCriticalTime() {
+    public long getCriticalTime() {
         return criticalTime;
     }
 
