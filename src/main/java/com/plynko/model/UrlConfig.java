@@ -2,12 +2,9 @@ package com.plynko.model;
 
 import java.net.URL;
 
-public class UrlConfig extends BaseEntity {
+public class UrlConfig extends Config {
 
     private URL url;
-
-    // in seconds
-    private int monitoringPeriod;
 
     // in milliseconds
     private long warningTime;
@@ -25,13 +22,10 @@ public class UrlConfig extends BaseEntity {
 
     private String subString;
 
-    private boolean active = true;
-
     public UrlConfig(Integer id, URL url, int monitoringPeriod, long warningTime, long criticalTime,
                      int responseCode, int minResponseSize, int maxResponseSize, String subString) {
-        super(id);
+        super(id, monitoringPeriod);
         this.url = url;
-        this.monitoringPeriod = monitoringPeriod;
         this.warningTime = warningTime;
         this.criticalTime = criticalTime;
         this.responseCode = responseCode;
@@ -42,10 +36,6 @@ public class UrlConfig extends BaseEntity {
 
     public URL getUrl() {
         return url;
-    }
-
-    public int getMonitoringPeriod() {
-        return monitoringPeriod;
     }
 
     public long getWarningTime() {
@@ -70,10 +60,6 @@ public class UrlConfig extends BaseEntity {
 
     public String getSubString() {
         return subString;
-    }
-
-    public boolean isActive() {
-        return active;
     }
 
     @Override

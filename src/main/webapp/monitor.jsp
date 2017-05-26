@@ -23,7 +23,7 @@
     <table border="0" cellpadding="8" cellspacing="2">
         <thead class="status">
         <tr>
-            <th>URL</th>
+            <th>Entity</th>
             <th>Status</th>
             <th>Last Check</th>
             <th>Status Information</th>

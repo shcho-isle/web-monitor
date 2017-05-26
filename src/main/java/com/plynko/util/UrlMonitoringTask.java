@@ -86,7 +86,7 @@ public class UrlMonitoringTask implements Runnable {
         String information = actualInformation.stream().collect(Collectors.joining("; "));
 
         StateRepository stateRepository = InMemoryStateRepositoryImpl.getInstance();
-        stateRepository.save(new State(id, url.toString(), status, information));
+        stateRepository.save(new State(null, id, url.toString(), status, information));
     }
 
     private void cleanInformation() {

@@ -8,17 +8,18 @@ public class State extends BaseEntity {
 
     private String name;
 
-    private Status currentStatus = Status.UNKNOWN;
+    private Status currentStatus;
 
     private Date dateTime;
 
     private String information;
     
     public State(Integer configId, String name) {
-        this(configId, name, Status.UNKNOWN, "Unavailable");
+        this(null, configId, name, Status.UNKNOWN, "Unavailable");
     }
 
-    public State(Integer configId, String name, Status currentStatus, String information) {
+    public State(Integer id, Integer configId, String name, Status currentStatus, String information) {
+        super(id);
         this.configId = configId;
         this.name = name;
         this.currentStatus = currentStatus;

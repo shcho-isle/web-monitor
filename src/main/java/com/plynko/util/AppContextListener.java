@@ -1,5 +1,6 @@
 package com.plynko.util;
 
+import com.plynko.model.Config;
 import com.plynko.model.UrlConfig;
 import com.plynko.repository.InMemoryConfigRepositoryImpl;
 import com.plynko.repository.ConfigRepository;
@@ -24,10 +25,9 @@ public class AppContextListener implements ServletContextListener {
         scheduler = Executors.newSingleThreadScheduledExecutor();
         Collection<UrlConfig> configs = repository.getAllCurrent();
 
-        for (UrlConfig urlConfig : configs) {
-            scheduler.scheduleWithFixedDelay(new UrlMonitoringTask(urlConfig.getId()), 0, urlConfig.getMonitoringPeriod(), TimeUnit.SECONDS);
+        for (Config config : configs) {
+            scheduler.scheduleWithFixedDelay(new UrlMonitoringTask(config.getId()), 0, config.getMonitoringPeriod(), TimeUnit.SECONDS);
         }
-
     }
 
     @Override
