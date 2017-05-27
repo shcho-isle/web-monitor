@@ -1,10 +1,8 @@
 package com.plynko.model;
 
-import java.net.URL;
-
 public class UrlConfig extends Config {
 
-    private URL url;
+    private String url;
 
     // in milliseconds
     private long warningTime;
@@ -22,9 +20,9 @@ public class UrlConfig extends Config {
 
     private String subString;
 
-    public UrlConfig(Integer id, URL url, int monitoringPeriod, long warningTime, long criticalTime,
-                     int responseCode, int minResponseSize, int maxResponseSize, String subString) {
-        super(id, monitoringPeriod);
+    public UrlConfig(Integer id, String url, int monitoringPeriod, boolean active, boolean misconfigured, long warningTime,
+                     long criticalTime, int responseCode, int minResponseSize, int maxResponseSize, String subString) {
+        super(id, monitoringPeriod, active, misconfigured);
         this.url = url;
         this.warningTime = warningTime;
         this.criticalTime = criticalTime;
@@ -34,7 +32,7 @@ public class UrlConfig extends Config {
         this.subString = subString;
     }
 
-    public URL getUrl() {
+    public String getUrl() {
         return url;
     }
 
@@ -68,13 +66,14 @@ public class UrlConfig extends Config {
                 "id=" + id +
                 ", url='" + url + '\'' +
                 ", monitoringPeriod=" + monitoringPeriod + " s" +
+                ", active=" + active +
+                ", misconfigured=" + misconfigured +
                 ", warningTime=" + warningTime + " ms" +
                 ", criticalTime=" + criticalTime + " ms" +
                 ", responseCode=" + responseCode +
                 ", minResponseSize=" + minResponseSize + " byte" +
                 ", maxResponseSize=" + maxResponseSize + " byte" +
                 ", subString='" + subString + '\'' +
-                ", active=" + active +
                 '}';
     }
 }

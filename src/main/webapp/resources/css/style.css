@@ -37,7 +37,7 @@ thead.status {
     background-color: #F83838;
 }
 
-.PENDING {
+.PENDING, .MISCONFIGURED {
     font-size: 8pt;
     background-color: #ACACAC;
 }

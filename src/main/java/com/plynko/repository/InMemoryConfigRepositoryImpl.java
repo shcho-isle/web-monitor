@@ -4,9 +4,7 @@ import com.plynko.model.UrlConfig;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -50,7 +48,7 @@ public class InMemoryConfigRepositoryImpl implements ConfigRepository {
     }
 
     @Override
-    public Collection<UrlConfig> getAllCurrent() {
+    public Collection<UrlConfig> getAll() {
         if (repository.isEmpty()) {
             populateStates();
         }
@@ -79,12 +77,13 @@ public class InMemoryConfigRepositoryImpl implements ConfigRepository {
     }
 
     private void validateAndSave(Properties properties) {
-        try {
-            URL url = new URL(properties.getProperty("monitoring.url"));
+        UrlConfig urlConfig = null;
+        String url = properties.getProperty("monitoring.url");
 
+        try {
             int monitoringPeriod = Integer.parseInt(properties.getProperty("monitoring.period"));
             if (monitoringPeriod <= 0) {
-                return;
+                throw new NumberFormatException("Monitoring period cannot be negative number.");
             }
 
             long warningTime = Integer.parseInt(properties.getProperty("response.time.warning"));
@@ -94,10 +93,12 @@ public class InMemoryConfigRepositoryImpl implements ConfigRepository {
             int maxResponseSize = Integer.parseInt(properties.getProperty("response.size.max"));
             String subString = properties.getProperty("response.substring");
 
-            UrlConfig urlConfig = new UrlConfig(null, url, monitoringPeriod, warningTime, criticalTime, responseCode, minResponseSize, maxResponseSize, subString);
+            urlConfig = new UrlConfig(null, url, monitoringPeriod, true, false, warningTime, criticalTime,
+                    responseCode, minResponseSize, maxResponseSize, subString);
+        } catch (NumberFormatException e) {
+            urlConfig = new UrlConfig(null, url, 0, true, true, 0, 0, 0, 0, 0, "");
+        } finally {
             save(urlConfig);
-        } catch (MalformedURLException | NumberFormatException e) {
-            return;
         }
     }
 }

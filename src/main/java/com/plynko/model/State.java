@@ -13,10 +13,6 @@ public class State extends BaseEntity {
     private Date dateTime;
 
     private String information;
-    
-    public State(Integer configId, String name) {
-        this(null, configId, name, Status.UNKNOWN, "Unavailable");
-    }
 
     public State(Integer id, Integer configId, String name, Status currentStatus, String information) {
         super(id);

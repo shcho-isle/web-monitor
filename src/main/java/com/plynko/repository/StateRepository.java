@@ -10,5 +10,5 @@ public interface StateRepository {
     // null if not found
     State get(int configId);
 
-    Collection<State> getAll();
+    Collection<State> getAllCurrent();
 }

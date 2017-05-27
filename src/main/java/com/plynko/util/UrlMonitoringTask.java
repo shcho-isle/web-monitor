@@ -37,7 +37,7 @@ public class UrlMonitoringTask implements Runnable {
         if (urlConfig.isActive()) {
             try {
                 long startTime = System.nanoTime();
-                String content = new Scanner(urlConfig.getUrl().openStream(), "UTF-8").useDelimiter("\\A").next();
+                String content = new Scanner(new URL(urlConfig.getUrl()).openStream(), "UTF-8").useDelimiter("\\A").next();
                 long responseTime = (System.nanoTime() - startTime) / 1_000_000;
                 analyzeResponseTime(responseTime, urlConfig.getWarningTime(), urlConfig.getCriticalTime());
             } catch (IOException e) {
@@ -63,7 +63,7 @@ public class UrlMonitoringTask implements Runnable {
         }
     }
 
-    private void saveState(URL url) {
+    private void saveState(String url) {
         List<String> actualInformation;
         Status status;
         if (!pending.isEmpty()) {
@@ -86,7 +86,7 @@ public class UrlMonitoringTask implements Runnable {
         String information = actualInformation.stream().collect(Collectors.joining("; "));
 
         StateRepository stateRepository = InMemoryStateRepositoryImpl.getInstance();
-        stateRepository.save(new State(null, id, url.toString(), status, information));
+        stateRepository.save(new State(null, id, url, status, information));
     }
 
     private void cleanInformation() {

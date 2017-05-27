@@ -21,7 +21,7 @@ public class StateServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setIntHeader("Refresh", RELOAD_PERIOD);
-        request.setAttribute("states", repository.getAll());
+        request.setAttribute("states", repository.getAllCurrent());
         request.setAttribute("lastUpdated", new Date());
         request.setAttribute("period", RELOAD_PERIOD);
         request.getRequestDispatcher("/monitor.jsp").forward(request, response);

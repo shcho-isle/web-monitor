@@ -1,7 +1,5 @@
 package com.plynko.repository;
 
-import com.plynko.model.Config;
-import com.plynko.model.UrlConfig;
 import com.plynko.model.State;
 
 import java.util.*;
@@ -36,19 +34,7 @@ public class InMemoryStateRepositoryImpl implements StateRepository {
     }
 
     @Override
-    public Collection<State> getAll() {
-        if (repository.isEmpty()) {
-            populate();
-        }
-
+    public Collection<State> getAllCurrent() {
         return repository.values();
-    }
-
-    private void populate() {
-        ConfigRepository configRepository = InMemoryConfigRepositoryImpl.getInstance();
-        Collection<UrlConfig> configs = new ArrayList<>(configRepository.getAllCurrent());
-        for (UrlConfig config : configs) {
-            save(new State(config.getId(), config.getUrl().toString()));
-        }
     }
 }

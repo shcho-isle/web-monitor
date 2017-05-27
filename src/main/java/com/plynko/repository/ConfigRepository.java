@@ -13,5 +13,5 @@ public interface ConfigRepository {
     // null if not found
     UrlConfig get(int id);
 
-    Collection<UrlConfig> getAllCurrent();
+    Collection<UrlConfig> getAll();
 }
