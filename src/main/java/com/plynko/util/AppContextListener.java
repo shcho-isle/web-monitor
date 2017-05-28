@@ -31,14 +31,14 @@ public class AppContextListener implements ServletContextListener {
         Collection<UrlConfig> configs = configRepository.getAll();
 
         for (UrlConfig config : configs) {
-            if (config.isActive()) {
-                if (!config.isMisconfigured()) {
-                    scheduler.scheduleWithFixedDelay(new UrlMonitoringTask(config.getId()), 0, config.getMonitoringPeriod(), TimeUnit.SECONDS);
+            if (config.isActive() && !config.isMisconfigured()) {
+                scheduler.scheduleWithFixedDelay(new UrlMonitoringTask(config.getId()), 0, config.getMonitoringPeriod(), TimeUnit.SECONDS);
+            } else {
+                if (!config.isActive()) {
+                    stateRepository.save(new State(null, config.getId(), config.getUrl(), Status.PENDING, "Monitoring task is not active."));
                 } else {
                     stateRepository.save(new State(null, config.getId(), config.getUrl(), Status.MISCONFIGURED, "Monitoring task is misconfigured."));
                 }
-            } else {
-                stateRepository.save(new State(null, config.getId(), config.getUrl(), Status.PENDING, "Monitoring task is not active."));
             }
         }
     }

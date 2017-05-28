@@ -7,9 +7,7 @@ import java.util.Objects;
 
 public class ConfigTestData {
 
-    public static final int TEST_CONFIG_ID = 1;
-
-    public static final UrlConfig TEST_CONFIG = new UrlConfig(TEST_CONFIG_ID, "https://hh.ua/", 1, true, false, 1, 1, 1, 1, 1, "password");
+    public static final UrlConfig TEST_CONFIG = new UrlConfig(null, "https://hh.ua/", 1, true, false, 1, 1, 1, 1, 1, "password");
 
     public static final ModelMatcher<UrlConfig> MATCHER = ModelMatcher.of(UrlConfig.class,
             (expected, actual) -> expected == actual ||
