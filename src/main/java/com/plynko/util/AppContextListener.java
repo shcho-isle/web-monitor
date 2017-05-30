@@ -35,9 +35,9 @@ public class AppContextListener implements ServletContextListener {
                 scheduler.scheduleWithFixedDelay(new UrlMonitoringTask(config.getId()), 0, config.getMonitoringPeriod(), TimeUnit.SECONDS);
             } else {
                 if (!config.isActive()) {
-                    stateRepository.save(new State(null, config.getId(), config.getUrl(), Status.PENDING, "Monitoring task is not active."));
+                    stateRepository.save(new State(null, config.getId(), config.getUrl(), Status.PENDING, "monitoring task is not active"));
                 } else {
-                    stateRepository.save(new State(null, config.getId(), config.getUrl(), Status.MISCONFIGURED, "Monitoring task is misconfigured."));
+                    stateRepository.save(new State(null, config.getId(), config.getUrl(), Status.MISCONFIGURED, "monitoring task is misconfigured"));
                 }
             }
         }

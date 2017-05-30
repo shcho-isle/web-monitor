@@ -2,12 +2,14 @@ package com.plynko;
 
 import com.plynko.matcher.ModelMatcher;
 import com.plynko.model.UrlConfig;
+import com.plynko.repository.ConfigRepository;
 
 import java.util.Objects;
 
 public class ConfigTestData {
 
-    public static final UrlConfig TEST_CONFIG = new UrlConfig(null, "https://hh.ua/", 1, true, false, 1, 1, 1, 1, 1, "password");
+    public static final UrlConfig TEST_CONFIG1 = new UrlConfig(1, "https://hh.ua/", 1, true, false, 1, 1, 1, 1, 1, "substring1");
+    public static final UrlConfig TEST_CONFIG2 = new UrlConfig(2, "https://igov.org.ua/", 2, false, true, 2, 2, 2, 2, 2, "substring2");
 
     public static final ModelMatcher<UrlConfig> MATCHER = ModelMatcher.of(UrlConfig.class,
             (expected, actual) -> expected == actual ||
@@ -23,4 +25,9 @@ public class ConfigTestData {
                             && Objects.equals(expected.getSubString(), actual.getSubString())
                             )
             );
+
+    public static void populateWithTestData(ConfigRepository repository){
+        repository.save(new UrlConfig(null, "https://hh.ua/", 1, true, false, 1, 1, 1, 1, 1, "substring1"));
+        repository.save(new UrlConfig(null, "https://igov.org.ua/", 2, false, true, 2, 2, 2, 2, 2, "substring2"));
+    }
 }

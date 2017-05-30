@@ -22,7 +22,7 @@ public class InMemoryConfigRepositoryImpl implements ConfigRepository {
     private final Map<Integer, UrlConfig> repository = new ConcurrentHashMap<>();
     private final AtomicInteger counter = new AtomicInteger(0);
 
-    private InMemoryConfigRepositoryImpl(){}
+    public InMemoryConfigRepositoryImpl(){}
 
     public static InMemoryConfigRepositoryImpl getInstance() {
         return instance;
@@ -50,12 +50,12 @@ public class InMemoryConfigRepositoryImpl implements ConfigRepository {
     @Override
     public Collection<UrlConfig> getAll() {
         if (repository.isEmpty()) {
-            populateStates();
+            populateConfigs();
         }
         return repository.values();
     }
 
-    private void populateStates() {
+    private void populateConfigs() {
         Path propertiesPath = null;
         try {
             propertiesPath = Paths.get(getClass().getClassLoader().getResource("urls").toURI());

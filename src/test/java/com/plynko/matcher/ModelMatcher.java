@@ -49,6 +49,11 @@ public class ModelMatcher<T> {
             return String.valueOf(entity);
         }
     }
+
+    public void assertEquals(T expected, T actual) {
+        Assert.assertEquals(wrap(expected), wrap(actual));
+    }
+
     public void assertCollectionEquals(Collection<T> expected, Collection<T> actual) {
         Assert.assertEquals(wrap(expected), wrap(actual));
     }

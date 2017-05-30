@@ -1,4 +1,4 @@
-.status {
+.body {
     font-family: arial, serif;
     background-color: white;
     color: black;
@@ -15,34 +15,49 @@
     font-weight: bold;
 }
 
-thead.status {
+.thead {
     font-size: 10pt;
     text-align: left;
     background-color: #999797;
     color: #DCE5C1;
 }
 
-.OK {
+.tbody {
     font-size: 8pt;
+}
+
+td.OK {
     background-color: #33FF00;
 }
 
-.WARNING {
-    font-size: 8pt;
+tr.OK {
+    background-color: lightgreen;
+}
+
+td.WARNING {
     background-color: #FFFF00;
 }
 
-.CRITICAL {
-    font-size: 8pt;
+tr.WARNING {
+    background-color: #FEFFC1;
+}
+
+td.CRITICAL {
     background-color: #F83838;
 }
 
-.PENDING, .MISCONFIGURED {
-    font-size: 8pt;
+tr.CRITICAL {
+    background-color: #FFBBBB;
+}
+
+td.PENDING {
     background-color: #ACACAC;
 }
 
-.UNKNOWN {
-    font-size: 8pt;
+td.UNKNOWN, td.MISCONFIGURED {
     background-color: #FF9900;
+}
+
+tr.UNKNOWN, tr.MISCONFIGURED {
+    background-color: #FFDA9F;
 }
