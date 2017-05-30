@@ -3,7 +3,6 @@ package com.plynko.repository;
 import com.plynko.model.UrlConfig;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -22,7 +21,8 @@ public class InMemoryConfigRepositoryImpl implements ConfigRepository {
     private final Map<Integer, UrlConfig> repository = new ConcurrentHashMap<>();
     private final AtomicInteger counter = new AtomicInteger(0);
 
-    public InMemoryConfigRepositoryImpl(){}
+    public InMemoryConfigRepositoryImpl() {
+    }
 
     public static InMemoryConfigRepositoryImpl getInstance() {
         return instance;
@@ -67,8 +67,7 @@ public class InMemoryConfigRepositoryImpl implements ConfigRepository {
         try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(propertiesPath, "*.properties")) {
             for (Path entry : directoryStream) {
                 Properties properties = new Properties();
-                InputStream propertiesStream = Files.newInputStream(entry);
-                properties.load(propertiesStream);
+                properties.load(Files.newBufferedReader(entry));
                 validateAndSave(properties);
             }
         } catch (IOException e) {

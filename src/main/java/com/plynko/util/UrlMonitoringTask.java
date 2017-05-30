@@ -9,37 +9,52 @@ import com.plynko.repository.ConfigRepository;
 import com.plynko.repository.StateRepository;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class UrlMonitoringTask implements Runnable {
 
-    private List<String> oks = new ArrayList<>();
     private List<String> warnings = new ArrayList<>();
     private List<String> criticals = new ArrayList<>();
     private List<String> unknown = new ArrayList<>();
     private List<String> pending = new ArrayList<>();
 
-    private Integer id;
+    private Integer configId;
 
-    public UrlMonitoringTask(Integer id) {
-        this.id = id;
+    public UrlMonitoringTask(Integer configId) {
+        this.configId = configId;
     }
 
     @Override
     public void run() {
         ConfigRepository configRepository = InMemoryConfigRepositoryImpl.getInstance();
-        UrlConfig urlConfig = configRepository.get(id);
+        UrlConfig urlConfig = configRepository.get(configId);
 
         if (urlConfig.isActive()) {
             try {
                 long startTime = System.nanoTime();
-                String content = new Scanner(new URL(urlConfig.getUrl()).openStream(), "UTF-8").useDelimiter("\\A").next();
+
+                URL url = new URL(urlConfig.getUrl());
+                HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+                connection.setRequestMethod("GET");
+                connection.connect();
+                String content = new Scanner(connection.getInputStream(), "UTF-8").useDelimiter("\\A").next();
+
                 long responseTime = (System.nanoTime() - startTime) / 1_000_000;
                 analyzeResponseTime(responseTime, urlConfig.getWarningTime(), urlConfig.getCriticalTime());
+
+                int responseCode = connection.getResponseCode();
+                analyzeResponseCode(responseCode, urlConfig.getResponseCode());
+
+                int responseSize = content.getBytes("UTF-8").length;
+                analyzeResponseSize(responseSize, urlConfig.getMinResponseSize(), urlConfig.getMaxResponseSize());
+
+                analyzeSubstring(content, urlConfig.getSubString());
             } catch (IOException e) {
                 unknown.add("monitoring failed");
             }
@@ -58,8 +73,34 @@ public class UrlMonitoringTask implements Runnable {
             criticals.add(info);
         } else if (responseTime >= warningTime) {
             warnings.add(info);
-        } else {
-            oks.add(info);
+        }
+    }
+
+    private void analyzeResponseCode(int actualCode, int expectedCode) {
+        String info = String.format("response code: %d (expected: %d)", actualCode, expectedCode);
+
+        if (actualCode != expectedCode) {
+            criticals.add(info);
+        }
+    }
+
+    private void analyzeResponseSize(int responseSize, int minResponseSize, int maxResponseSize) {
+        String info = String.format("response size: %d (limits: %d-%d b)", responseSize, minResponseSize, maxResponseSize);
+
+        if (responseSize < minResponseSize || responseSize > maxResponseSize) {
+            criticals.add(info);
+        }
+    }
+
+    private void analyzeSubstring(String content, String subString) {
+        if (subString == null || subString.isEmpty()) {
+            return;
+        }
+
+        String info = "substring is %s (\"" + subString + "\")";
+
+        if (!content.contains(subString)) {
+            criticals.add(String.format(info, "absent"));
         }
     }
 
@@ -79,18 +120,17 @@ public class UrlMonitoringTask implements Runnable {
             actualInformation = warnings;
             status = Status.WARNING;
         } else {
-            actualInformation = oks;
+            actualInformation = Collections.emptyList();
             status = Status.OK;
         }
 
         String information = actualInformation.stream().collect(Collectors.joining("; "));
 
         StateRepository stateRepository = InMemoryStateRepositoryImpl.getInstance();
-        stateRepository.save(new State(null, id, url, status, information));
+        stateRepository.save(new State(null, configId, url, status, information));
     }
 
     private void cleanInformation() {
-        oks.clear();
         warnings.clear();
         criticals.clear();
         unknown.clear();

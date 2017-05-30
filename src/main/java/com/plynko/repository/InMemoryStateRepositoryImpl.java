@@ -13,7 +13,8 @@ public class InMemoryStateRepositoryImpl implements StateRepository {
     private final Map<Integer, State> repository = new ConcurrentHashMap<>();
     private final AtomicInteger counter = new AtomicInteger(0);
 
-    private InMemoryStateRepositoryImpl(){}
+    private InMemoryStateRepositoryImpl() {
+    }
 
     public static InMemoryStateRepositoryImpl getInstance() {
         return instance;

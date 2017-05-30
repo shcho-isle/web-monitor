@@ -23,10 +23,10 @@ public class ConfigTestData {
                             && Objects.equals(expected.getMinResponseSize(), actual.getMinResponseSize())
                             && Objects.equals(expected.getMaxResponseSize(), actual.getMaxResponseSize())
                             && Objects.equals(expected.getSubString(), actual.getSubString())
-                            )
-            );
+                    )
+    );
 
-    public static void populateWithTestData(ConfigRepository repository){
+    public static void populateWithTestData(ConfigRepository repository) {
         repository.save(new UrlConfig(null, "https://hh.ua/", 1, true, false, 1, 1, 1, 1, 1, "substring1"));
         repository.save(new UrlConfig(null, "https://igov.org.ua/", 2, false, true, 2, 2, 2, 2, 2, "substring2"));
     }
