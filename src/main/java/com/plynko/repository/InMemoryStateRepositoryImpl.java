@@ -13,7 +13,7 @@ public class InMemoryStateRepositoryImpl implements StateRepository {
     private final Map<Integer, State> repository = new ConcurrentHashMap<>();
     private final AtomicInteger counter = new AtomicInteger(0);
 
-    private InMemoryStateRepositoryImpl() {
+    public InMemoryStateRepositoryImpl() {
     }
 
     public static InMemoryStateRepositoryImpl getInstance() {
@@ -27,11 +27,6 @@ public class InMemoryStateRepositoryImpl implements StateRepository {
         }
         repository.put(state.getConfigId(), state);
         return state;
-    }
-
-    @Override
-    public State get(int configId) {
-        return repository.get(configId);
     }
 
     @Override

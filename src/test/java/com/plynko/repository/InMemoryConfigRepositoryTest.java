@@ -22,7 +22,7 @@ public class InMemoryConfigRepositoryTest {
 
     @Test
     public void testSave() throws Exception {
-        UrlConfig newConfig = new UrlConfig(null, "http://www.i.ua/", 77, true, false, 222, 333, 200, 1111, 99999, "");
+        UrlConfig newConfig = getCreated();
         UrlConfig created = repository.save(newConfig);
         newConfig.setId(created.getId());
         MATCHER.assertCollectionEquals(Arrays.asList(TEST_CONFIG1, TEST_CONFIG2, newConfig), repository.getAll());
@@ -41,8 +41,22 @@ public class InMemoryConfigRepositoryTest {
     }
 
     @Test
+    public void testUpdate() throws Exception {
+        UrlConfig updated = getUpdated();
+        repository.save(updated);
+        MATCHER.assertEquals(updated, repository.get(CONFIG_ID1));
+    }
+
+    @Test
     public void testGetAll() throws Exception {
         Collection<UrlConfig> all = repository.getAll();
+        MATCHER.assertCollectionEquals(Arrays.asList(TEST_CONFIG1, TEST_CONFIG2), all);
+    }
+
+    @Test
+    public void testGetAllInit() throws Exception {
+        ConfigRepository emptyRepository = new InMemoryConfigRepositoryImpl();
+        Collection<UrlConfig> all = emptyRepository.getAll();
         MATCHER.assertCollectionEquals(Arrays.asList(TEST_CONFIG1, TEST_CONFIG2), all);
     }
 }

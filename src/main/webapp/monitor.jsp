@@ -35,10 +35,10 @@
         <tbody class="tbody">
         <c:forEach items="${states}" var="state">
             <jsp:useBean id="state" scope="page" type="com.plynko.model.State"/>
-            <c:set var="status" scope="page" value="${state.currentStatus.toString()}"/>
+            <c:set var="status" scope="page" value="${state.status.toString()}"/>
             <tr class="${status}">
                 <td>${state.name}</td>
-                <td class="${status}">${state.currentStatus}</td>
+                <td class="${status}">${state.status}</td>
                 <td><fmt:formatDate value="${state.dateTime}" pattern="MM-dd-yyyy hh:mm:ss"/></td>
                 <td>${state.information}</td>
             </tr>

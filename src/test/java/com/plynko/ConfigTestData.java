@@ -8,8 +8,11 @@ import java.util.Objects;
 
 public class ConfigTestData {
 
-    public static final UrlConfig TEST_CONFIG1 = new UrlConfig(1, "https://hh.ua/", 1, true, false, 1, 1, 1, 1, 1, "substring1");
-    public static final UrlConfig TEST_CONFIG2 = new UrlConfig(2, "https://igov.org.ua/", 2, false, true, 2, 2, 2, 2, 2, "substring2");
+    public static final int CONFIG_ID1 = 1;
+    public static final int CONFIG_ID2 = CONFIG_ID1 + 1;
+
+    public static final UrlConfig TEST_CONFIG1 = new UrlConfig(CONFIG_ID1, "https://hh.ua/", 1, true, false, 1, 1, 1, 1, 1, "substring1");
+    public static final UrlConfig TEST_CONFIG2 = new UrlConfig(CONFIG_ID2, "https://igov.org.ua/", 2, true, false, 2, 2, 2, 2, 2, "substring2");
 
     public static final ModelMatcher<UrlConfig> MATCHER = ModelMatcher.of(UrlConfig.class,
             (expected, actual) -> expected == actual ||
@@ -28,6 +31,14 @@ public class ConfigTestData {
 
     public static void populateWithTestData(ConfigRepository repository) {
         repository.save(new UrlConfig(null, "https://hh.ua/", 1, true, false, 1, 1, 1, 1, 1, "substring1"));
-        repository.save(new UrlConfig(null, "https://igov.org.ua/", 2, false, true, 2, 2, 2, 2, 2, "substring2"));
+        repository.save(new UrlConfig(null, "https://igov.org.ua/", 2, true, false, 2, 2, 2, 2, 2, "substring2"));
+    }
+
+    public static UrlConfig getCreated() {
+        return new UrlConfig(null, "http://www.i.ua/", 3, true, false, 3, 3, 3, 3, 3, "");
+    }
+
+    public static UrlConfig getUpdated() {
+        return new UrlConfig(CONFIG_ID1, "http://hh.ua/", 4, true, false, 4, 4, 4, 4, 4, "updated substring");
     }
 }

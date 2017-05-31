@@ -8,17 +8,17 @@ public class State extends BaseEntity {
 
     private String name;
 
-    private Status currentStatus;
+    private Status status;
 
     private Date dateTime;
 
     private String information;
 
-    public State(Integer id, Integer configId, String name, Status currentStatus, String information) {
+    public State(Integer id, Integer configId, String name, Status status, String information) {
         super(id);
         this.configId = configId;
         this.name = name;
-        this.currentStatus = currentStatus;
+        this.status = status;
         this.dateTime = new Date();
         this.information = information;
     }
@@ -31,8 +31,8 @@ public class State extends BaseEntity {
         return name;
     }
 
-    public Status getCurrentStatus() {
-        return currentStatus;
+    public Status getStatus() {
+        return status;
     }
 
     public Date getDateTime() {
@@ -49,7 +49,7 @@ public class State extends BaseEntity {
                 "id=" + id +
                 ", configId=" + configId +
                 ", name='" + name + '\'' +
-                ", currentStatus=" + currentStatus +
+                ", status=" + status +
                 ", dateTime=" + dateTime +
                 ", information='" + information + '\'' +
                 '}';
