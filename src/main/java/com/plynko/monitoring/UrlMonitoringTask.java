@@ -1,9 +1,8 @@
-package com.plynko.util;
+package com.plynko.monitoring;
 
 import com.plynko.model.UrlConfig;
 import com.plynko.model.State;
 import com.plynko.model.Status;
-import com.plynko.repository.InMemoryConfigRepositoryImpl;
 import com.plynko.repository.InMemoryStateRepositoryImpl;
 import com.plynko.repository.ConfigRepository;
 import com.plynko.repository.StateRepository;
@@ -25,14 +24,15 @@ public class UrlMonitoringTask implements Runnable {
     private List<String> pending = new ArrayList<>();
 
     private Integer configId;
+    private ConfigRepository configRepository;
 
-    public UrlMonitoringTask(Integer configId) {
+    public UrlMonitoringTask(Integer configId, ConfigRepository configRepository) {
         this.configId = configId;
+        this.configRepository = configRepository;
     }
 
     @Override
     public void run() {
-        ConfigRepository configRepository = InMemoryConfigRepositoryImpl.getInstance();
         UrlConfig urlConfig = configRepository.get(configId);
 
         if (urlConfig.isActive()) {
@@ -46,15 +46,15 @@ public class UrlMonitoringTask implements Runnable {
                 String content = new Scanner(connection.getInputStream(), "UTF-8").useDelimiter("\\A").next();
 
                 long responseTime = (System.nanoTime() - startTime) / 1_000_000;
-                analyzeResponseTime(responseTime, urlConfig.getWarningTime(), urlConfig.getCriticalTime());
+                checkResponseTime(responseTime, urlConfig.getWarningTime(), urlConfig.getCriticalTime());
 
                 int responseCode = connection.getResponseCode();
-                analyzeResponseCode(responseCode, urlConfig.getResponseCode());
+                checkResponseCode(responseCode, urlConfig.getResponseCode());
 
                 int responseSize = content.getBytes("UTF-8").length;
-                analyzeResponseSize(responseSize, urlConfig.getMinResponseSize(), urlConfig.getMaxResponseSize());
+                checkResponseSize(responseSize, urlConfig.getMinResponseSize(), urlConfig.getMaxResponseSize());
 
-                analyzeSubstring(content, urlConfig.getSubString());
+                checkSubstring(content, urlConfig.getSubString());
             } catch (IOException e) {
                 unknown.add("monitoring failed");
             }
@@ -66,7 +66,7 @@ public class UrlMonitoringTask implements Runnable {
         cleanInformation();
     }
 
-    private void analyzeResponseTime(long responseTime, long warningTime, long criticalTime) {
+    private void checkResponseTime(long responseTime, long warningTime, long criticalTime) {
         String info = String.format("response time: %d ms (limits: %d/%d ms)", responseTime, warningTime, criticalTime);
 
         if (responseTime >= criticalTime) {
@@ -76,7 +76,7 @@ public class UrlMonitoringTask implements Runnable {
         }
     }
 
-    private void analyzeResponseCode(int actualCode, int expectedCode) {
+    private void checkResponseCode(int actualCode, int expectedCode) {
         String info = String.format("response code: %d (expected: %d)", actualCode, expectedCode);
 
         if (actualCode != expectedCode) {
@@ -84,7 +84,7 @@ public class UrlMonitoringTask implements Runnable {
         }
     }
 
-    private void analyzeResponseSize(int responseSize, int minResponseSize, int maxResponseSize) {
+    private void checkResponseSize(int responseSize, int minResponseSize, int maxResponseSize) {
         String info = String.format("response size: %d (limits: %d-%d b)", responseSize, minResponseSize, maxResponseSize);
 
         if (responseSize < minResponseSize || responseSize > maxResponseSize) {
@@ -92,7 +92,7 @@ public class UrlMonitoringTask implements Runnable {
         }
     }
 
-    private void analyzeSubstring(String content, String subString) {
+    private void checkSubstring(String content, String subString) {
         if (subString == null || subString.isEmpty()) {
             return;
         }

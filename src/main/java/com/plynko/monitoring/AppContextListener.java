@@ -1,4 +1,4 @@
-package com.plynko.util;
+package com.plynko.monitoring;
 
 import com.plynko.model.State;
 import com.plynko.model.Status;
@@ -19,12 +19,11 @@ import java.util.concurrent.TimeUnit;
 @WebListener
 public class AppContextListener implements ServletContextListener {
 
-
     private ScheduledExecutorService scheduler;
 
     @Override
     public void contextInitialized(ServletContextEvent arg0) {
-        ConfigRepository configRepository = InMemoryConfigRepositoryImpl.getInstance();
+        ConfigRepository configRepository = new InMemoryConfigRepositoryImpl();
         StateRepository stateRepository = InMemoryStateRepositoryImpl.getInstance();
 
         scheduler = Executors.newSingleThreadScheduledExecutor();
@@ -32,7 +31,7 @@ public class AppContextListener implements ServletContextListener {
 
         for (UrlConfig config : configs) {
             if (config.isActive() && !config.isMisconfigured()) {
-                scheduler.scheduleWithFixedDelay(new UrlMonitoringTask(config.getId()), 0, config.getMonitoringPeriod(), TimeUnit.SECONDS);
+                scheduler.scheduleWithFixedDelay(new UrlMonitoringTask(config.getId(), configRepository), 0, config.getMonitoringPeriod(), TimeUnit.SECONDS);
             } else {
                 if (!config.isActive()) {
                     stateRepository.save(new State(null, config.getId(), config.getUrl(), Status.PENDING, "monitoring task is not active"));

@@ -16,17 +16,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class InMemoryConfigRepositoryImpl implements ConfigRepository {
 
-    private static final InMemoryConfigRepositoryImpl instance = new InMemoryConfigRepositoryImpl();
-
     private final Map<Integer, UrlConfig> repository = new ConcurrentHashMap<>();
     private final AtomicInteger counter = new AtomicInteger(0);
-
-    public InMemoryConfigRepositoryImpl() {
-    }
-
-    public static InMemoryConfigRepositoryImpl getInstance() {
-        return instance;
-    }
 
     @Override
     public UrlConfig save(UrlConfig urlConfig) {
