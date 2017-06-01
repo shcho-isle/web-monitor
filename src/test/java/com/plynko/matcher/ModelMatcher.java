@@ -14,19 +14,17 @@ import java.util.stream.Collectors;
  */
 public class ModelMatcher<T> {
     private final Comparator<T> comparator;
-    private final Class<T> entityClass;
 
     public interface Comparator<T> {
         boolean compare(T expected, T actual);
     }
 
-    private ModelMatcher(Class<T> entityClass, Comparator<T> comparator) {
-        this.entityClass = entityClass;
+    private ModelMatcher(Comparator<T> comparator) {
         this.comparator = comparator;
     }
 
-    public static <T> ModelMatcher<T> of(Class<T> entityClass, Comparator<T> comparator) {
-        return new ModelMatcher<>(entityClass, comparator);
+    public static <T> ModelMatcher<T> of(Comparator<T> comparator) {
+        return new ModelMatcher<>(comparator);
     }
 
     private class Wrapper {

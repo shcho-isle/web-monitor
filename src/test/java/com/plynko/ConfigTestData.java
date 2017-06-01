@@ -14,7 +14,7 @@ public class ConfigTestData {
     public static final UrlConfig TEST_CONFIG1 = new UrlConfig(CONFIG_ID1, "https://hh.ua/", 1, true, false, 1, 1, 1, 1, 1, "substring1");
     public static final UrlConfig TEST_CONFIG2 = new UrlConfig(CONFIG_ID2, "https://igov.org.ua/", 2, true, false, 2, 2, 2, 2, 2, "substring2");
 
-    public static final ModelMatcher<UrlConfig> MATCHER = ModelMatcher.of(UrlConfig.class,
+    public static final ModelMatcher<UrlConfig> MATCHER = ModelMatcher.of(
             (expected, actual) -> expected == actual ||
                     (Objects.equals(expected.getId(), actual.getId())
                             && Objects.equals(expected.getMonitoringPeriod(), actual.getMonitoringPeriod())

@@ -10,7 +10,7 @@
 </head>
 <body class="body">
 <section>
-    <h2><a href="index.html">Home</a></h2>
+    <h2>Website Monitoring Tool</h2>
 
     <table class="infoBox" border=1 cellpadding=0 cellspacing=0>
         <tr>

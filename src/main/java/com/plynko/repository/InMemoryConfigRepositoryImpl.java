@@ -68,20 +68,20 @@ public class InMemoryConfigRepositoryImpl implements ConfigRepository {
 
     private void validateAndSave(Properties properties) {
         UrlConfig urlConfig = null;
-        String url = properties.getProperty("monitoring.url");
+        String url = properties.getProperty("urlConfig.url");
 
         try {
-            int monitoringPeriod = Integer.parseInt(properties.getProperty("monitoring.period"));
+            int monitoringPeriod = Integer.parseInt(properties.getProperty("config.monitoringPeriod"));
             if (monitoringPeriod <= 0) {
                 throw new NumberFormatException("Monitoring period cannot be negative number.");
             }
 
-            long warningTime = Integer.parseInt(properties.getProperty("response.time.warning"));
-            int criticalTime = Integer.parseInt(properties.getProperty("response.time.critical"));
-            int responseCode = Integer.parseInt(properties.getProperty("response.code"));
-            int minResponseSize = Integer.parseInt(properties.getProperty("response.size.min"));
-            int maxResponseSize = Integer.parseInt(properties.getProperty("response.size.max"));
-            String subString = properties.getProperty("response.substring");
+            long warningTime = Integer.parseInt(properties.getProperty("urlConfig.warningTime"));
+            int criticalTime = Integer.parseInt(properties.getProperty("urlConfig.criticalTime"));
+            int responseCode = Integer.parseInt(properties.getProperty("urlConfig.responseCode"));
+            int minResponseSize = Integer.parseInt(properties.getProperty("urlConfig.minResponseSize"));
+            int maxResponseSize = Integer.parseInt(properties.getProperty("urlConfig.maxResponseSize"));
+            String subString = properties.getProperty("urlConfig.subString");
 
             urlConfig = new UrlConfig(null, url, monitoringPeriod, true, false, warningTime, criticalTime,
                     responseCode, minResponseSize, maxResponseSize, subString);

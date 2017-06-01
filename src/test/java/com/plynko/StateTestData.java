@@ -17,7 +17,7 @@ public class StateTestData {
     public static final State TEST_STATE1 = new State(STATE_ID1, CONFIG_ID1, TEST_CONFIG1.getUrl(), Status.OK, "info1");
     public static final State TEST_STATE2 = new State(STATE_ID2, CONFIG_ID2, TEST_CONFIG2.getUrl(), Status.CRITICAL, "info2");
 
-    public static final ModelMatcher<State> MATCHER = ModelMatcher.of(State.class,
+    public static final ModelMatcher<State> MATCHER = ModelMatcher.of(
             (expected, actual) -> expected == actual ||
                     (Objects.equals(expected.getId(), actual.getId())
                             && Objects.equals(expected.getConfigId(), actual.getConfigId())
