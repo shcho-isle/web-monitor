@@ -17,7 +17,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 @WebListener
-public class AppContextListener implements ServletContextListener {
+public class TaskExecutor implements ServletContextListener {
 
     private ScheduledExecutorService scheduler;
 
@@ -26,7 +26,7 @@ public class AppContextListener implements ServletContextListener {
         ConfigRepository configRepository = new InMemoryConfigRepositoryImpl();
         StateRepository stateRepository = InMemoryStateRepositoryImpl.getInstance();
 
-        scheduler = Executors.newSingleThreadScheduledExecutor();
+        scheduler = Executors.newScheduledThreadPool(8);
         Collection<UrlConfig> configs = configRepository.getAll();
 
         for (UrlConfig config : configs) {

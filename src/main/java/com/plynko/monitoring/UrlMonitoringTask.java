@@ -42,6 +42,8 @@ public class UrlMonitoringTask implements Runnable {
                 URL url = new URL(urlConfig.getUrl());
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
+                connection.setConnectTimeout((int) urlConfig.getCriticalTime());
+                connection.setReadTimeout((int) urlConfig.getCriticalTime());
                 connection.connect();
                 String content = new Scanner(connection.getInputStream(), "UTF-8").useDelimiter("\\A").next();
 
