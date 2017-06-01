@@ -1,10 +1,11 @@
 Website Monitoring Tool 
 =======================
-Run `maven-install` script to compile application and build `war` file.
+- Run `maven-install` script to compile application and build `war` file.
 
-Path to URL properties files: `/src/main/resources/urls/`
+- Path to URL properties files: `/src/main/resources/urls/`
 
-URL properties file example:
+- URL properties file example:
+
 
     # monitoring period in seconds
     config.monitoringPeriod=14
@@ -24,6 +25,6 @@ URL properties file example:
     # optional parameter. Can be empty or absent.
     urlConfig.subString=Children’s Online Privacy Policy
     
-Application's model structure:
+- Application's model structure:
 
 ![alt text](https://github.com/shcho-isle/web-monitor/blob/master/diagram.png)

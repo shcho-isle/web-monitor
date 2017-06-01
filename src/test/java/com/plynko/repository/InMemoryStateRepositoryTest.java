@@ -7,7 +7,6 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static com.plynko.ConfigTestData.CONFIG_ID1;
 import static com.plynko.StateTestData.*;
 
 public class InMemoryStateRepositoryTest {
