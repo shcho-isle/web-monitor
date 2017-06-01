@@ -5,8 +5,7 @@ Website Monitoring Tool
 - Path to URL properties files: `/src/main/resources/urls/`
 
 - URL properties file example:
-
-
+```properties
     # monitoring period in seconds
     config.monitoringPeriod=14
     
@@ -24,6 +23,7 @@ Website Monitoring Tool
     
     # optional parameter. Can be empty or absent.
     urlConfig.subString=Children’s Online Privacy Policy
+```
     
 - Application's model structure:
 
