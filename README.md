@@ -1,6 +1,6 @@
 Website Monitoring Tool 
 =======================
-- Run `maven-install` script to compile application and build `war` file.
+- Run `maven-install` script to compile application and build `war` file. Or use `web-monitor.war` from project's root.
 
 - Path to URL properties files: `/src/main/resources/urls/`
 
