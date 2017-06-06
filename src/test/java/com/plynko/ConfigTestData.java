@@ -11,7 +11,7 @@ public class ConfigTestData {
     public static final int CONFIG_ID1 = 1;
     public static final int CONFIG_ID2 = CONFIG_ID1 + 1;
 
-    public static final UrlConfig TEST_CONFIG1 = new UrlConfig(CONFIG_ID1, "https://hh.ua/", 1, true, false, 1, 1, 1, 1, 1, "substring1");
+    public static final UrlConfig TEST_CONFIG1 = new UrlConfig(CONFIG_ID1, "http://www.starwars.com/", 100, true, false, 1, 10_000, 200, 1, 10_000_000, null);
     public static final UrlConfig TEST_CONFIG2 = new UrlConfig(CONFIG_ID2, "https://igov.org.ua/", 2, true, false, 2, 2, 2, 2, 2, "substring2");
 
     public static final ModelMatcher<UrlConfig> MATCHER = ModelMatcher.of(
@@ -30,7 +30,7 @@ public class ConfigTestData {
     );
 
     public static void populateWithTestData(ConfigRepository repository) {
-        repository.save(new UrlConfig(null, "https://hh.ua/", 1, true, false, 1, 1, 1, 1, 1, "substring1"));
+        repository.save(new UrlConfig(null, "http://www.starwars.com/", 100, true, false, 1, 10_000, 200, 1, 10_000_000, null));
         repository.save(new UrlConfig(null, "https://igov.org.ua/", 2, true, false, 2, 2, 2, 2, 2, "substring2"));
     }
 

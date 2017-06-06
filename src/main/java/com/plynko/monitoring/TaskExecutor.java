@@ -31,7 +31,7 @@ public class TaskExecutor implements ServletContextListener {
 
         for (UrlConfig config : configs) {
             if (config.isActive() && !config.isMisconfigured()) {
-                scheduler.scheduleWithFixedDelay(new UrlMonitoringTask(config.getId(), configRepository), 0, config.getMonitoringPeriod(), TimeUnit.SECONDS);
+                scheduler.scheduleWithFixedDelay(new UrlMonitoringTask(config.getId(), configRepository, stateRepository), 0, config.getMonitoringPeriod(), TimeUnit.SECONDS);
             } else {
                 if (!config.isActive()) {
                     stateRepository.save(new State(null, config.getId(), config.getUrl(), Status.PENDING, "monitoring task is not active"));

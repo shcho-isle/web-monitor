@@ -25,10 +25,12 @@ public class UrlMonitoringTask implements Runnable {
 
     private Integer configId;
     private ConfigRepository configRepository;
+    private StateRepository stateRepository;
 
-    public UrlMonitoringTask(Integer configId, ConfigRepository configRepository) {
+    public UrlMonitoringTask(Integer configId, ConfigRepository configRepository, StateRepository stateRepository) {
         this.configId = configId;
         this.configRepository = configRepository;
+        this.stateRepository = stateRepository;
     }
 
     @Override
@@ -79,17 +81,15 @@ public class UrlMonitoringTask implements Runnable {
     }
 
     private void checkResponseCode(int actualCode, int expectedCode) {
-        String info = String.format("response code: %d (expected: %d)", actualCode, expectedCode);
-
         if (actualCode != expectedCode) {
+            String info = String.format("response code: %d (expected: %d)", actualCode, expectedCode);
             criticals.add(info);
         }
     }
 
     private void checkResponseSize(int responseSize, int minResponseSize, int maxResponseSize) {
-        String info = String.format("response size: %d (limits: %d-%d b)", responseSize, minResponseSize, maxResponseSize);
-
         if (responseSize < minResponseSize || responseSize > maxResponseSize) {
+            String info = String.format("response size: %d (limits: %d-%d b)", responseSize, minResponseSize, maxResponseSize);
             criticals.add(info);
         }
     }
@@ -99,9 +99,8 @@ public class UrlMonitoringTask implements Runnable {
             return;
         }
 
-        String info = "substring is %s (\"" + subString + "\")";
-
         if (!content.contains(subString)) {
+            String info = "substring is %s (\"" + subString + "\")";
             criticals.add(String.format(info, "absent"));
         }
     }
@@ -128,7 +127,6 @@ public class UrlMonitoringTask implements Runnable {
 
         String information = actualInformation.stream().collect(Collectors.joining("; "));
 
-        StateRepository stateRepository = InMemoryStateRepositoryImpl.getInstance();
         stateRepository.save(new State(null, configId, url, status, information));
     }
 
