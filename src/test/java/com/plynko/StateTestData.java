@@ -23,6 +23,7 @@ public class StateTestData {
                             && Objects.equals(expected.getConfigId(), actual.getConfigId())
                             && Objects.equals(expected.getName(), actual.getName())
                             && Objects.equals(expected.getStatus(), actual.getStatus())
+                            && Objects.equals(expected.getInformation(), actual.getInformation())
                     )
     );
 

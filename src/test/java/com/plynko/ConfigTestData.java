@@ -13,6 +13,15 @@ public class ConfigTestData {
 
     public static final UrlConfig TEST_CONFIG1 = new UrlConfig(CONFIG_ID1, "http://www.starwars.com/", 100, true, false, 1, 10_000, 200, 1, 10_000_000, null);
     public static final UrlConfig TEST_CONFIG2 = new UrlConfig(CONFIG_ID2, "https://igov.org.ua/", 2, true, false, 2, 2, 2, 2, 2, "substring2");
+    public static final UrlConfig TEST_CONFIG3 = new UrlConfig(CONFIG_ID1, "http://www.starwars.com/", 100, true, false, 1, 1, 200, 1, 10_000_000, null);
+    public static final UrlConfig TEST_CONFIG4 = new UrlConfig(CONFIG_ID1, "http://www.starwars.com/", 100, true, false, 10_000, 10_001, 400, 1, 10_000_000, null);
+    public static final UrlConfig TEST_CONFIG5 = new UrlConfig(CONFIG_ID1, "http://www.starwars.com/", 100, true, false, 10_000, 10_001, 200, 10_000_000, 10_000_001, null);
+    public static final UrlConfig TEST_CONFIG6 = new UrlConfig(CONFIG_ID1, "http://www.starwars.com/", 100, true, false, 10_000, 10_001, 200, 1, 2, null);
+    public static final UrlConfig TEST_CONFIG7 = new UrlConfig(CONFIG_ID1, "http://www.starwars.com/", 100, true, false, 10_000, 10_001, 200, 1, 10_000_001, "absent substring");
+    public static final UrlConfig TEST_CONFIG8 = new UrlConfig(CONFIG_ID1, "http://www.starwars.com/", 100, true, false, 10_000, 10_001, 200, 1, 10_000_000, "All Rights Reserved");
+    public static final UrlConfig TEST_CONFIG9 = new UrlConfig(CONFIG_ID1, "http://www.starwars.com/", 100, false, false, 10_000, 10_001, 200, 1, 10_000_000, null);
+    public static final UrlConfig TEST_CONFIG10 = new UrlConfig(CONFIG_ID1, "ftps://www.starwars.com/", 100, true, false, 10_000, 10_001, 200, 1, 10_000_000, null);
+    public static final UrlConfig TEST_CONFIG11 = new UrlConfig(CONFIG_ID1, "http://www.starwars.com/", 100, true, true, 10_000, 10_001, 200, 1, 10_000_000, null);
 
     public static final ModelMatcher<UrlConfig> MATCHER = ModelMatcher.of(
             (expected, actual) -> expected == actual ||
