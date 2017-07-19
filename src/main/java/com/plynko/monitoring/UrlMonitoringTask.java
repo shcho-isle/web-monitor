@@ -3,7 +3,6 @@ package com.plynko.monitoring;
 import com.plynko.model.UrlConfig;
 import com.plynko.model.State;
 import com.plynko.model.Status;
-import com.plynko.repository.InMemoryStateRepositoryImpl;
 import com.plynko.repository.ConfigRepository;
 import com.plynko.repository.StateRepository;
 

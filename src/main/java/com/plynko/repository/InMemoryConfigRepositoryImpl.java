@@ -4,10 +4,7 @@ import com.plynko.model.UrlConfig;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Properties;
@@ -62,7 +59,8 @@ public class InMemoryConfigRepositoryImpl implements ConfigRepository {
                 validateAndSave(properties);
             }
         } catch (IOException e) {
-            throw new RuntimeException(String.format("error reading folder %s: %s", propertiesPath, e.getMessage()), e);
+            throw new FileSystemNotFoundException(String.format("error reading folder %s: %s", propertiesPath, e.getMessage()));
+            //TODO exception handler page
         }
     }
 

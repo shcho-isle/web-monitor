@@ -1,6 +1,13 @@
-Website Monitoring Tool 
-=======================
-- Run `maven-install` script to compile application and build `war` file. Or use `web-monitor.war` from project's root.
+## Website Monitoring Tool 
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/1eff970353684ed58d115bb4db09e28d)](https://www.codacy.com/app/pavlo-plynko/web-monitor?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=shcho-isle/web-monitor&amp;utm_campaign=Badge_Grade)
+[![Build Status](https://travis-ci.org/shcho-isle/web-monitor.svg?branch=master)](https://travis-ci.org/shcho-isle/web-monitor)
+
+The application monitors the state of external web applications by periodically pumping out pages according to given URLs, and monitoring response time, HTTP response code, response size in a certain range, and optionally - the presence of some substring in the response.
+
+## Launching
+
+- Build `war` file using maven
 
 - Path to URL properties files: `/src/main/resources/urls/`
 
@@ -24,7 +31,3 @@ Website Monitoring Tool
     # optional parameter. Can be empty or absent.
     urlConfig.subString=Children’s Online Privacy Policy
 ```
-    
-- Application's model structure:
-
-![alt text](https://github.com/shcho-isle/web-monitor/blob/master/diagram.png)

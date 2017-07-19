@@ -13,6 +13,10 @@ public class InMemoryStateRepositoryImpl implements StateRepository {
     private final Map<Integer, State> repository = new ConcurrentHashMap<>();
     private final AtomicInteger counter = new AtomicInteger(0);
 
+    /**
+     * For unit testing purposes.
+     * Use {@code getInstance} method for other purposes.
+     */
     public InMemoryStateRepositoryImpl() {
     }
 
