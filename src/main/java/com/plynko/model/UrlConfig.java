@@ -20,9 +20,9 @@ public class UrlConfig extends Config {
 
     private String subString;
 
-    public UrlConfig(Integer id, String url, int monitoringPeriod, boolean active, boolean misconfigured, long warningTime,
-                     long criticalTime, int responseCode, int minResponseSize, int maxResponseSize, String subString) {
-        super(id, monitoringPeriod, active, misconfigured);
+    public UrlConfig(Integer id, String url, int monitoringPeriod, long warningTime, long criticalTime, int responseCode,
+                     int minResponseSize, int maxResponseSize, String subString) {
+        super(id, monitoringPeriod);
         this.url = url;
         this.warningTime = warningTime;
         this.criticalTime = criticalTime;
@@ -30,6 +30,10 @@ public class UrlConfig extends Config {
         this.minResponseSize = minResponseSize;
         this.maxResponseSize = maxResponseSize;
         this.subString = subString;
+    }
+
+    public UrlConfig(String url) {
+        this.url = url;
     }
 
     public String getUrl() {
@@ -58,6 +62,34 @@ public class UrlConfig extends Config {
 
     public String getSubString() {
         return subString;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public void setWarningTime(long warningTime) {
+        this.warningTime = warningTime;
+    }
+
+    public void setCriticalTime(long criticalTime) {
+        this.criticalTime = criticalTime;
+    }
+
+    public void setResponseCode(int responseCode) {
+        this.responseCode = responseCode;
+    }
+
+    public void setMinResponseSize(int minResponseSize) {
+        this.minResponseSize = minResponseSize;
+    }
+
+    public void setMaxResponseSize(int maxResponseSize) {
+        this.maxResponseSize = maxResponseSize;
+    }
+
+    public void setSubString(String subString) {
+        this.subString = subString;
     }
 
     @Override

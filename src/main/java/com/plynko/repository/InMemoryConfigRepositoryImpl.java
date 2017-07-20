@@ -65,26 +65,35 @@ public class InMemoryConfigRepositoryImpl implements ConfigRepository {
     }
 
     private void validateAndSave(Properties properties) {
-        UrlConfig urlConfig = null;
         String url = properties.getProperty("urlConfig.url");
+        UrlConfig urlConfig = new UrlConfig(url);
 
         try {
             int monitoringPeriod = Integer.parseInt(properties.getProperty("config.monitoringPeriod"));
             if (monitoringPeriod <= 0) {
                 throw new NumberFormatException("Monitoring period cannot be negative number.");
             }
+            urlConfig.setMonitoringPeriod(monitoringPeriod);
 
             long warningTime = Integer.parseInt(properties.getProperty("urlConfig.warningTime"));
-            int criticalTime = Integer.parseInt(properties.getProperty("urlConfig.criticalTime"));
-            int responseCode = Integer.parseInt(properties.getProperty("urlConfig.responseCode"));
-            int minResponseSize = Integer.parseInt(properties.getProperty("urlConfig.minResponseSize"));
-            int maxResponseSize = Integer.parseInt(properties.getProperty("urlConfig.maxResponseSize"));
-            String subString = properties.getProperty("urlConfig.subString");
+            urlConfig.setWarningTime(warningTime);
 
-            urlConfig = new UrlConfig(null, url, monitoringPeriod, true, false, warningTime, criticalTime,
-                    responseCode, minResponseSize, maxResponseSize, subString);
+            int criticalTime = Integer.parseInt(properties.getProperty("urlConfig.criticalTime"));
+            urlConfig.setCriticalTime(criticalTime);
+
+            int responseCode = Integer.parseInt(properties.getProperty("urlConfig.responseCode"));
+            urlConfig.setResponseCode(responseCode);
+
+            int minResponseSize = Integer.parseInt(properties.getProperty("urlConfig.minResponseSize"));
+            urlConfig.setMinResponseSize(minResponseSize);
+
+            int maxResponseSize = Integer.parseInt(properties.getProperty("urlConfig.maxResponseSize"));
+            urlConfig.setMaxResponseSize(maxResponseSize);
+            
+            String subString = properties.getProperty("urlConfig.subString");
+            urlConfig.setSubString(subString);
         } catch (NumberFormatException e) {
-            urlConfig = new UrlConfig(null, url, 0, true, true, 0, 0, 0, 0, 0, "");
+            urlConfig.setMisconfigured(true);
         } finally {
             save(urlConfig);
         }
