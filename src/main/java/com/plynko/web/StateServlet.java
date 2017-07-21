@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
 
-@WebServlet("/monitor")
+@WebServlet("/")
 public class StateServlet extends HttpServlet {
 
     private StateRepository repository = InMemoryStateRepositoryImpl.getInstance();

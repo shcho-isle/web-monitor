@@ -8,6 +8,7 @@ import com.plynko.repository.StateRepository;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,6 +36,7 @@ public class UrlMonitoringTask implements Runnable {
     @Override
     public void run() {
         UrlConfig urlConfig = configRepository.get(configId);
+        int timeout = (int) urlConfig.getCriticalTime() + 1000;
 
         if (urlConfig.isActive()) {
             try {
@@ -43,6 +45,8 @@ public class UrlMonitoringTask implements Runnable {
                 URL url = new URL(urlConfig.getUrl());
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
+                connection.setConnectTimeout(timeout);
+                connection.setReadTimeout(timeout);
                 connection.connect();
                 String content = new Scanner(connection.getInputStream(), "UTF-8").useDelimiter("\\A").next();
 
@@ -56,6 +60,8 @@ public class UrlMonitoringTask implements Runnable {
                 checkResponseSize(responseSize, urlConfig.getMinResponseSize(), urlConfig.getMaxResponseSize());
 
                 checkSubstring(content, urlConfig.getSubString());
+            } catch (SocketTimeoutException e) {
+                criticals.add(String.format("response time: > %d ms (limits: %d/%d ms)", timeout, urlConfig.getWarningTime(), urlConfig.getCriticalTime()));
             } catch (IOException e) {
                 unknown.add("monitoring failed");
             }

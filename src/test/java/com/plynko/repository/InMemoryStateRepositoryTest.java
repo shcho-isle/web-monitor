@@ -20,22 +20,22 @@ public class InMemoryStateRepositoryTest {
 
     @Test
     public void testSave() throws Exception {
-        State newConfig = getCreated();
-        State created = repository.save(newConfig);
-        newConfig.setId(created.getId());
-        MATCHER.assertCollectionEquals(Arrays.asList(TEST_STATE1, TEST_STATE2, newConfig), repository.getAllCurrent());
+        State newState = getCreated();
+        State created = repository.save(newState);
+        newState.setId(created.getId());
+        MATCHER.assertCollectionEquals(Arrays.asList(TEST_STATE1, TEST_STATE2, newState), repository.getAllCurrent());
     }
 
     @Test
     public void testUpdate() throws Exception {
-        State updated = getUpdated();
-        repository.save(updated);
-        MATCHER.assertCollectionEquals(Arrays.asList(updated, TEST_STATE2), repository.getAllCurrent());
+        State updatedState = getUpdated();
+        repository.save(updatedState);
+        MATCHER.assertCollectionEquals(Arrays.asList(updatedState, TEST_STATE2), repository.getAllCurrent());
     }
 
     @Test
     public void testGetAllCurrent() throws Exception {
-        Collection<State> all = repository.getAllCurrent();
-        MATCHER.assertCollectionEquals(Arrays.asList(TEST_STATE1, TEST_STATE2), all);
+        Collection<State> allStates = repository.getAllCurrent();
+        MATCHER.assertCollectionEquals(Arrays.asList(TEST_STATE1, TEST_STATE2), allStates);
     }
 }

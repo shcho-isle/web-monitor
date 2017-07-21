@@ -37,7 +37,7 @@ public class UrlMonitoringTaskTest {
 
     @Test
     public void testWarningTime() throws Exception {
-        UrlConfig config = getTestConfig();
+        UrlConfig config = getTestConfig1();
         config.setWarningTime(1);
         String actual = getStateString(config);
         Assert.assertTrue(actual.contains("status=WARNING") && actual.contains("response time:"));
@@ -45,7 +45,7 @@ public class UrlMonitoringTaskTest {
 
     @Test
     public void testCriticalTime() throws Exception {
-        UrlConfig config = getTestConfig();
+        UrlConfig config = getTestConfig1();
         config.setCriticalTime(1);
         String actual = getStateString(config);
         Assert.assertTrue(actual.contains("status=CRITICAL") && actual.contains("response time:"));
@@ -53,7 +53,7 @@ public class UrlMonitoringTaskTest {
 
     @Test
     public void testResponseCode() throws Exception {
-        UrlConfig config = getTestConfig();
+        UrlConfig config = getTestConfig1();
         config.setResponseCode(400);
         String actual = getStateString(config);
         Assert.assertTrue(actual.contains("status=CRITICAL") && actual.contains("response code:"));
@@ -61,7 +61,7 @@ public class UrlMonitoringTaskTest {
 
     @Test
     public void testMinResponseSize() throws Exception {
-        UrlConfig config = getTestConfig();
+        UrlConfig config = getTestConfig1();
         config.setMinResponseSize(10_000_000);
         String actual = getStateString(config);
         Assert.assertTrue(actual.contains("status=CRITICAL") && actual.contains("response size:"));
@@ -69,7 +69,7 @@ public class UrlMonitoringTaskTest {
 
     @Test
     public void testMaxResponseSize() throws Exception {
-        UrlConfig config = getTestConfig();
+        UrlConfig config = getTestConfig1();
         config.setMaxResponseSize(2);
         String actual = getStateString(config);
         Assert.assertTrue(actual.contains("status=CRITICAL") && actual.contains("response size:"));
@@ -77,7 +77,7 @@ public class UrlMonitoringTaskTest {
 
     @Test
     public void testSubString() throws Exception {
-        UrlConfig config = getTestConfig();
+        UrlConfig config = getTestConfig1();
         config.setSubString("absent substring");
         String actual = getStateString(config);
         Assert.assertTrue(actual.contains("status=CRITICAL") && actual.contains("substring is"));
@@ -85,14 +85,14 @@ public class UrlMonitoringTaskTest {
 
     @Test
     public void testOk() throws Exception {
-        UrlConfig config = getTestConfig();
+        UrlConfig config = getTestConfig1();
         String actual = getStateString(config);
         Assert.assertTrue(actual.contains("status=OK"));
     }
 
     @Test
     public void testPending() throws Exception {
-        UrlConfig config = getTestConfig();
+        UrlConfig config = getTestConfig1();
         config.setActive(false);
         String actual = getStateString(config);
         Assert.assertTrue(actual.contains("status=PENDING") && actual.contains("was excluded from monitoring"));
@@ -100,7 +100,7 @@ public class UrlMonitoringTaskTest {
 
     @Test
     public void testUnknown() throws Exception {
-        UrlConfig config = getTestConfig();
+        UrlConfig config = getTestConfig1();
         config.setUrl("ftps://www.starwars.com/");
         String actual = getStateString(config);
         Assert.assertTrue(actual.contains("status=UNKNOWN") && actual.contains("monitoring failed"));

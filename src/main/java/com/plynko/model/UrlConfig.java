@@ -20,18 +20,6 @@ public class UrlConfig extends Config {
 
     private String subString;
 
-    public UrlConfig(Integer id, String url, int monitoringPeriod, long warningTime, long criticalTime, int responseCode,
-                     int minResponseSize, int maxResponseSize, String subString) {
-        super(id, monitoringPeriod);
-        this.url = url;
-        this.warningTime = warningTime;
-        this.criticalTime = criticalTime;
-        this.responseCode = responseCode;
-        this.minResponseSize = minResponseSize;
-        this.maxResponseSize = maxResponseSize;
-        this.subString = subString;
-    }
-
     public UrlConfig(String url) {
         this.url = url;
     }

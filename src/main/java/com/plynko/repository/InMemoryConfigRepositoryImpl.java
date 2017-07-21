@@ -60,13 +60,15 @@ public class InMemoryConfigRepositoryImpl implements ConfigRepository {
             }
         } catch (IOException e) {
             throw new FileSystemNotFoundException(String.format("error reading folder %s: %s", propertiesPath, e.getMessage()));
-            //TODO exception handler page
         }
     }
 
     private void validateAndSave(Properties properties) {
         String url = properties.getProperty("urlConfig.url");
         UrlConfig urlConfig = new UrlConfig(url);
+        if (url == null) {
+            urlConfig.setMisconfigured(true);
+        }
 
         try {
             int monitoringPeriod = Integer.parseInt(properties.getProperty("config.monitoringPeriod"));
