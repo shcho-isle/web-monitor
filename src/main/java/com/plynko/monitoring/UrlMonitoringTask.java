@@ -18,14 +18,14 @@ import java.util.stream.Collectors;
 
 public class UrlMonitoringTask implements Runnable {
 
-    private List<String> warnings = new ArrayList<>();
-    private List<String> criticals = new ArrayList<>();
-    private List<String> unknown = new ArrayList<>();
-    private List<String> pending = new ArrayList<>();
+    private final List<String> warnings = new ArrayList<>();
+    private final List<String> criticals = new ArrayList<>();
+    private final List<String> unknown = new ArrayList<>();
+    private final List<String> pending = new ArrayList<>();
 
-    private Integer configId;
-    private ConfigRepository configRepository;
-    private StateRepository stateRepository;
+    private final Integer configId;
+    private final ConfigRepository configRepository;
+    private final StateRepository stateRepository;
 
     public UrlMonitoringTask(Integer configId, ConfigRepository configRepository, StateRepository stateRepository) {
         this.configId = configId;

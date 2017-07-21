@@ -4,4 +4,8 @@
 		 http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
     <display-name>web-monitor</display-name>
+
+    <welcome-file-list>
+        <welcome-file>monitor</welcome-file>
+    </welcome-file-list>
 </web-app>

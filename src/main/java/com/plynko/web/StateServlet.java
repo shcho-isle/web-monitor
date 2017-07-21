@@ -11,10 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
 
-@WebServlet("/")
+@WebServlet("/monitor")
 public class StateServlet extends HttpServlet {
 
-    private StateRepository repository = InMemoryStateRepositoryImpl.getInstance();
+    private final StateRepository repository = InMemoryStateRepositoryImpl.getInstance();
 
     private static final int RELOAD_PERIOD = 5;
 

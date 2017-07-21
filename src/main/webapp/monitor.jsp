@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
@@ -34,7 +34,7 @@
         </thead>
         <tbody class="tbody">
         <c:forEach items="${states}" var="state">
-            <jsp:useBean id="state" scope="page" type="com.plynko.model.State"/>
+            <jsp:useBean id="state" type="com.plynko.model.State"/>
             <c:set var="status" scope="page" value="${state.status.toString()}"/>
             <tr class="${status}">
                 <td>${state.name}</td>

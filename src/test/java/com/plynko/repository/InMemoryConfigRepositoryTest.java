@@ -29,12 +29,6 @@ public class InMemoryConfigRepositoryTest {
     }
 
     @Test
-    public void testDelete() throws Exception {
-        repository.delete(1);
-        MATCHER.assertCollectionEquals(Collections.singletonList(TEST_CONFIG2), repository.getAll());
-    }
-
-    @Test
     public void testGet() throws Exception {
         UrlConfig config = repository.get(1);
         MATCHER.assertEquals(TEST_CONFIG1, config);

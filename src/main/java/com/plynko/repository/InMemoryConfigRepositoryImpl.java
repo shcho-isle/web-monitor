@@ -26,11 +26,6 @@ public class InMemoryConfigRepositoryImpl implements ConfigRepository {
     }
 
     @Override
-    public boolean delete(int id) {
-        return repository.remove(id) != null;
-    }
-
-    @Override
     public UrlConfig get(int id) {
         return repository.get(id);
     }

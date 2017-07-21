@@ -4,15 +4,15 @@ import java.util.Date;
 
 public class State extends BaseEntity {
 
-    private Integer configId;
+    private final Integer configId;
 
-    private String name;
+    private final String name;
 
-    private Status status;
+    private final Status status;
 
-    private Date dateTime;
+    private final Date dateTime;
 
-    private String information;
+    private final String information;
 
     public State(Integer id, Integer configId, String name, Status status, String information) {
         super(id);

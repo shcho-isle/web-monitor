@@ -10,13 +10,8 @@ public class Config extends BaseEntity {
     protected boolean misconfigured = false;
 
     protected Config() {
-    }
-
-    protected Config(Integer id, int monitoringPeriod) {
-        super(id);
         this.active = true;
         this.misconfigured = false;
-        this.monitoringPeriod = monitoringPeriod;
     }
 
     public int getMonitoringPeriod() {
